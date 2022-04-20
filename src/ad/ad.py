@@ -152,7 +152,7 @@ class AD(object):
             truth = get_gt(truth)
 
         num_of_preds = len(predicted)
-        assert num_of_preds == len(truth), exit(f"{ACTION} number of predicts {num_of_preds} does not match number of labels {num_of_ground}")
+        assert num_of_preds == len(truth), exit(f"{ACTION} number of predicts {num_of_preds} does not match number of labels {len(truth)}")
         threshold = kwargs['threshold'] if 'threshold' in kwargs.keys() else None
         time = f"{kwargs['time']}" if 'time' in kwargs.keys() else "N/A"
         # calculate metrics

@@ -1,0 +1,94 @@
+[*] testing: pca
+              total        used        free      shared  buff/cache   available
+Mem:        7968656      429812     7221820        4252      317024     7291804
+Swap:       4194300      441116     3753184
+
+[*] reading ../src/data/out4096/demo_dataset_shard_0.hdf5
+[*] dimensions of test data: (17600, 4096) ~1.0% of the data from the first 8 pcaps!
+[*] with a mean: 0.30739015340805054
+[*] memory
+svmem(total=8159903744, available=6800826368, percent=16.7, used=1106108416, free=6729158656, active=845406208, inactive=191483904, buffers=1744896, cached=322891776, shared=4354048, slab=130392064)
+PCA(copy=True, iterated_power='auto', n_components=128, random_state=None,
+    svd_solver='auto', tol=0.0, whiten=False)
+real, user, sys:  0:15.10, 82.65, 2.70
+
+[*] testing: kpca
+              total        used        free      shared  buff/cache   available
+Mem:        7968656      430372     7221256        4252      317028     7291244
+Swap:       4194300      441116     3753184
+
+/home/koppfabi/anaconda3/lib/python3.7/site-packages/sklearn/utils/extmath.py:530: RuntimeWarning: invalid value encountered in multiply
+  v *= signs[:, np.newaxis]
+[*] reading ../src/data/out4096/demo_dataset_shard_0.hdf5
+[*] dimensions of test data: (17600, 4096) ~1.0% of the data from the first 8 pcaps!
+[*] with a mean: 0.30739015340805054
+[*] memory
+svmem(total=8159903744, available=6804135936, percent=16.6, used=1102798848, free=6732468224, active=839872512, inactive=191483904, buffers=1744896, cached=322891776, shared=4354048, slab=130617344)
+KernelPCA(alpha=1.0, coef0=1, copy_X=True, degree=3, eigen_solver='auto',
+          fit_inverse_transform=False, gamma=None, kernel='linear',
+          kernel_params=None, max_iter=None, n_components=128, n_jobs=-2,
+          random_state=None, remove_zero_eig=False, tol=0)
+real, user, sys:  6:12.29, 2307.33, 12.41
+
+[*] testing: iso
+              total        used        free      shared  buff/cache   available
+Mem:        7968656      436804     7211428        4456      320424     7284592
+Swap:       4194300      436508     3757792
+
+[*] reading ../src/data/out4096/demo_dataset_shard_0.hdf5
+[*] dimensions of test data: (17600, 4096) ~1.0% of the data from the first 8 pcaps!
+[*] with a mean: 0.30739015340805054
+[*] memory
+svmem(total=8159903744, available=6798098432, percent=16.7, used=1108627456, free=6723162112, active=846020608, inactive=197128192, buffers=1773568, cached=326340608, shared=4562944, slab=130330624)
+Isomap(eigen_solver='auto', max_iter=None, metric='minkowski',
+       metric_params=None, n_components=128, n_jobs=-2, n_neighbors=5,
+       neighbors_algorithm='auto', p=2, path_method='auto', tol=0)
+Traceback (most recent call last):
+  File "dim_redu.py", line 69, in <module>
+    reducer.fit(data)
+  File "/home/koppfabi/anaconda3/lib/python3.7/site-packages/sklearn/manifold/_isomap.py", line 217, in fit
+    self._fit_transform(X)
+  File "/home/koppfabi/anaconda3/lib/python3.7/site-packages/sklearn/manifold/_isomap.py", line 168, in _fit_transform
+    self.embedding_ = self.kernel_pca_.fit_transform(G)
+  File "/home/koppfabi/anaconda3/lib/python3.7/site-packages/sklearn/decomposition/_kernel_pca.py", line 306, in fit_transform
+    self.fit(X, **params)
+  File "/home/koppfabi/anaconda3/lib/python3.7/site-packages/sklearn/decomposition/_kernel_pca.py", line 282, in fit
+    self._fit_transform(K)
+  File "/home/koppfabi/anaconda3/lib/python3.7/site-packages/sklearn/decomposition/_kernel_pca.py", line 204, in _fit_transform
+    K, eigvals=(K.shape[0] - n_components, K.shape[0] - 1))
+  File "/home/koppfabi/anaconda3/lib/python3.7/site-packages/scipy/linalg/decomp.py", line 436, in eigh
+    il=lo, iu=hi, overwrite_a=overwrite_a)
+MemoryError: Unable to allocate 2.31 GiB for an array with shape (17600, 17600) and data type float64
+real, user, sys:  0:47.17, 152.47, 6.28
+
+[*] testing: lle
+              total        used        free      shared  buff/cache   available
+Mem:        7968656      376100     7428332         932      164224     7374836
+Swap:       4194300      455740     3738560
+
+[*] reading ../src/data/out4096/demo_dataset_shard_0.hdf5
+[*] dimensions of test data: (17600, 4096) ~1.0% of the data from the first 8 pcaps!
+[*] with a mean: 0.30739015340805054
+[*] memory
+svmem(total=8159903744, available=6845411328, percent=16.1, used=1064992768, free=6824628224, active=735776768, inactive=220803072, buffers=368640, cached=269914112, shared=987136, slab=130228224)
+LocallyLinearEmbedding(eigen_solver='auto', hessian_tol=0.0001, max_iter=100,
+                       method='standard', modified_tol=1e-12, n_components=128,
+                       n_jobs=-2, n_neighbors=5, neighbors_algorithm='auto',
+                       random_state=None, reg=0.001, tol=1e-06)
+real, user, sys:  10:52.49, 3747.12, 11.37
+
+[*] testing: se
+              total        used        free      shared  buff/cache   available
+Mem:        7968656      411816     7245024        2212      311816     7311928
+Swap:       4194300      439356     3754944
+
+[*] reading ../src/data/out4096/demo_dataset_shard_0.hdf5
+[*] dimensions of test data: (17600, 4096) ~1.0% of the data from the first 8 pcaps!
+[*] with a mean: 0.30739015340805054
+[*] memory
+svmem(total=8159903744, available=6828658688, percent=16.3, used=1080471552, free=6760128512, active=761692160, inactive=254672896, buffers=843776, cached=318459904, shared=2265088, slab=130011136)
+SpectralEmbedding(affinity='nearest_neighbors', eigen_solver=None, gamma=None,
+                  n_components=128, n_jobs=-2, n_neighbors=None,
+                  random_state=None)
+real, user, sys:  23:49.69, 8726.39, 35.19
+

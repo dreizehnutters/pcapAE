@@ -121,7 +121,10 @@ if ARGS.AD or all([x in ARGS.model for x in ['save_model', 'AD']]) or ARGS.basel
                     verbose=ARGS.verbose)
     start_time = time.now()
     if ARGS.baseline == 'noDL':
-        train_data, _ = get_raw_data(ARGS.fit, ARGS)
+        if ARGS.fit == 'skip':
+            train_data = None
+        else:
+            train_data, _ = get_raw_data(ARGS.fit, ARGS)
     else:
         try:
             train_data
@@ -131,7 +134,7 @@ if ARGS.AD or all([x in ARGS.model for x in ['save_model', 'AD']]) or ARGS.basel
             else:
                 train_data = None
 
-    if train_data is not None or ARGS.baseline == 'pcapAE':
+    if train_data is not None or ARGS.baseline == 'pcapAE' or ARGS.fit == 'skip':
         if ARGS.grid_search:
             with console.status("[bold green]grid search...", spinner='dots') as status:
                 classifier.grid_search(data=train_data,
@@ -169,21 +172,22 @@ if ARGS.AD or all([x in ARGS.model for x in ['save_model', 'AD']]) or ARGS.basel
                                         save_ano_pids='y',)
             classifier.clean(ARGS.dir)
         else:
-            classifier.fit_data(train_data, ARGS.dir)
-            del train_data
+            if train_data is not None:
+                classifier.fit_data(train_data, ARGS.dir)
+                del train_data
             if ARGS.baseline == 'noDL':
-                ## new begin data
-                predict_data, truth = get_raw_data(ARGS.vali, ARGS)
-                classifier.calc_metrics(predicted=classifier.predict_data(data=predict_data),
-                                        truth=truth,
-                                        show=True,
-                                        save=ARGS.vali,
-                                        WRITER=WRITER,
-                                        log_dir=ARGS.dir,
-                                        in_file=ARGS.vali,
-                                        time=time.now()-start_time,
-                                        save_ano_pids='y',)
-                ## eval
+                if train_data is not None:
+                    predict_data, truth = get_raw_data(ARGS.vali, ARGS)
+                    classifier.calc_metrics(predicted=classifier.predict_data(data=predict_data),
+                                            truth=truth,
+                                            show=True,
+                                            save=ARGS.vali,
+                                            WRITER=WRITER,
+                                            log_dir=ARGS.dir,
+                                            in_file=ARGS.vali,
+                                            time=time.now()-start_time,
+                                            save_ano_pids='y',)
+                # eval
                 eval_data, truth = get_raw_data(ARGS.predict, ARGS)
                 classifier.calc_metrics(predicted=classifier.predict_data(data=eval_data),
                                         truth=truth,

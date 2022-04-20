@@ -193,13 +193,13 @@ python3 main.py --model <PCAPAE_MODEL> --fit <FIT_SET_PATH> --predict <PREDICT_S
 {BOLD}# shallow ML anomaly detection training {CLR}
 python3 main.py --AD --model *.yaml --fit <REDU_FIT_SET_PATH> [--predict <REDU_PREDICT_SET_PATH>] [--grid_search]
 
-{BOLD}# test triang AD on new data {CLR}
+{BOLD}# test training AD on new data {CLR}
 python3 main.py --model <AD_MODLE_PATH> --predict <REDU_SET_PATH>
 
 {BOLD}# only deep learning baseline {CLR}
 python3 main.py --baseline pcapAE --model <PCAPAE_MODEL> --predict <PREDICT_SET_PATH>
 
-{BOLD}# no deep leanring baseline {CLR}
+{BOLD}# no deep learning baseline {CLR}
 python3 main.py --baseline noDL --AD --model ../test/blueprints/base_if.yaml --fit <FIT_SET_PATH> --vali <VALI_SET_PATH> --predict <PREDICT_SET_PATH> 
 
 {BOLD}====={CLR}
@@ -263,14 +263,17 @@ else:
         # TODO relax rule for baseline compression
         help_text = "[!] --[f]it data must be in reduced form since no --model was provided"
     
-if help_text != "":
+if help_text != '':
     PARSER.print_help()
     print()
     exit(help_text)
 
 if not ARGS.no_banner:
-    print("""  ______  ______  ______  ______     ______  ______    
- /\  __ \/\  ___\/\  __ \/\  __ \   /\  __ \/\  ___\   
- \ \  __/\ \ \___\ \  __ \ \  __/   \ \  __ \ \  _\_   
-  \ \_\   \ \_____\ \_\ \_\ \_\      \ \_\ \_\ \_____\ 
-   \/_/    \/_____/\/_/\/_/\/_/       \/_/\/_/\/_____/""")
+    from rich import print as rprint
+    banner = """  ______  ______  ______  ______  [cyan] ______  ______[/]
+ /\  __ \/\  ___\/\  __ \/\  __ \ [cyan]/\  __ \/\  ___\ [/]
+ \ \  __/\ \ \___\ \  __ \ \  __/[cyan] \ \  __ \ \  _\_  [/]
+  \ \_\   \ \_____\ \_\ \_\ \_\  [cyan]  \ \_\ \_\ \_____\ [/]
+   \/_/    \/_____/\/_/\/_/\/_/  [cyan]   \/_/\/_/\/_____/[/] [red]@13utters[/]
+   """
+    rprint(f"[strike yellow]{' '*52}[/]\n[magenta bold]{banner}[/][strike yellow]{'_'*55}[/]")
